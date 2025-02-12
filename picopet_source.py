@@ -18,15 +18,17 @@ blue = [0.5, 0.5, 1, 0.8]
 gray = [0.5, 0.5, 0.5, 1]
 transparent = [0, 0, 0, 0]
 
+#Defines a new material for the simulation using specified properties
 def create_material(simulation):
-    elems = ["C", "H", "O"]
-    nb_atoms = [5, 8, 2]
-    gcm3 = g4_units.g_cm3
+    elems = ["C", "H", "O"] # Elements constituting the material
+    nb_atoms = [5, 8, 2] #Number of atoms for each element
+    gcm3 = g4_units.g_cm3 #Density unit
     simulation.volume_manager.material_database.add_material_nb_atoms(
-        "IEC_PLASTIC", elems, nb_atoms, 1.18 * gcm3
+        "IEC_PLASTIC", elems, nb_atoms, 1.18 * gcm3 #IEC plastic mimics real-world plastics used for medical imaging simulations, Density of 1.8 g/cm3
     )
 
-
+#Sets up a phantom with specified parameters and configurations such as materials and geometrical details
+#Phantom is meant to mimic the human body / thing that is being imaged
 def add_iec_phantom(
     simulation,
     name="iec",
@@ -62,6 +64,7 @@ def add_iec_phantom(
     add_iec_central_cylinder(simulation, name, top_interior)
 
     # spheres
+    #Simulate points of interest in medical imaging
     add_iec_all_spheres(
         simulation, name, thickness_z, sphere_starting_angle, toggle_sphere_order
     )

@@ -20,7 +20,7 @@ from opengate.geometry.utility import get_circular_repetition
 from opengate.sources.base import get_rad_yield
 
 if __name__ == "__main__":
-    sim = gate.Simulation()
+    sim = gate.Simulation() #initializes new simulation
 
     # options
     # warning the visualisation is slow !
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     world.size = [0.5 * m, 0.5 * m, 0.5 * m]
    # world.size = [1 * m, 1 * m, 1 * m]
 
-    world.material = "G4_AIR"
+    world.material = "G4_AIR" #setting the world material to air 
 
     # add the Philips Vereos PET
     pet = pet_vereos.add_pet(sim, "pet", create_housing=False)

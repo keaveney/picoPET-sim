@@ -66,17 +66,20 @@ def add_pet(sim, name="pet", create_housing=True, create_mat=True, debug=False):
     #       of 4x4 die
     #           of 2x2 crystal
     # ------------------------------------------
+    #the hierarchy from the the bottom up is crystal->die (2x2 crystals) -> stack (NxM) dies? -> module (AxB stacks?)
 
     # Module (each module has 4x1 stacks)
+    #The modules are the detectors all around the ring
     module = sim.add_volume("Box", f"{name}_module")
     module.mother = pet.name
     #module.size = [19 * mm, 131.4 * mm, 33.6 * mm]
-    module.size = [19 * mm, 32.85 * mm, 33.6 * mm]
+    module.size = [19 * mm, 32.85 * mm, 33.6 * mm] #ORIGINAL
+    #module.size = [19 * mm, 80 * mm, 33.6 * mm]
     module.material = "ABS"
     module.color = red
     translations_ring, rotations_ring = get_circular_repetition(
         # 18 -> 2
-        31, [175 * mm, 0, 0], start_angle_deg=190, axis=[0, 0, 1]
+        31, [175 * mm, 0, 0], start_angle_deg=190, axis=[0, 0, 1] #changing the number of modules that are around the ring, also changes the size of the ring (175 default)
     )
     module.translation = translations_ring
     module.rotation = rotations_ring
@@ -84,15 +87,18 @@ def add_pet(sim, name="pet", create_housing=True, create_mat=True, debug=False):
     # Stack (each stack has 4x4 die)
     stack = sim.add_volume("Box", f"{name}_stack")
     stack.mother = module.name
-    stack.size = [module.size[0], 32.6 * mm, 32.6 * mm]
+    stack.size = [module.size[0], 32.6 * mm, 32.6 * mm] #ORIGINAL
+    #stack.size = [module.size[0], 80 * mm, 32.6 * mm]
     stack.material = "G4_AIR"
-    stack.translation = get_grid_repetition([1, 1, 1], [0, 32.85 * mm, 32.85 * mm])
+    #stack.translation = get_grid_repetition([1, 1, 1], [0, 32.85 * mm, 32.85 * mm]) ORIGINAL
+    stack.translation = get_grid_repetition([1, 1, 1], [0, 80 * mm, 32.85 * mm])
     stack.color = green
 
     # Die (each die has 2x2 crystal)
     die = sim.add_volume("Box", f"{name}_die")
     die.mother = stack.name
-    die.size = [module.size[0], 8 * mm, 8 * mm]
+    die.size = [module.size[0], 8 * mm, 8 * mm] #ORIGINAL
+    #die.size = [module.size[0], 40 * mm, 8 * mm]
     die.material = "G4_AIR"
     die.translation = get_grid_repetition([1, 4, 4], [0, 8 * mm, 8 * mm])
     die.color = white
@@ -100,7 +106,8 @@ def add_pet(sim, name="pet", create_housing=True, create_mat=True, debug=False):
     # Crystal
     crystal = sim.add_volume("Box", f"{name}_crystal")
     crystal.mother = die.name
-    crystal.size = [module.size[0], 4 * mm, 4 * mm]
+    crystal.size = [module.size[0], 4 * mm, 4 * mm] #ORIGINAL
+    #crystal.size = [module.size[0], 20 * mm, 4 * mm]
     crystal.material = "LYSO"
     crystal.translation = get_grid_repetition([1, 2, 2], [0, 4 * mm, 4 * mm])
 
