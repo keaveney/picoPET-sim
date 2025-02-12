@@ -1,3 +1,4 @@
 #files to be ignored by git
 opengate_env
 output
+__pycache__
