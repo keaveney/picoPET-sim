@@ -79,30 +79,58 @@ if __name__ == "__main__":
     #jaszczak_source = gate_jaszczak.add_background_source(sim, jaszczak_name="jaszczak", src_name="source", activity_bqml=1e-14)
     
    # add a simple waterbox with a hot sphere inside
-    waterbox = sim.add_volume("Box", "waterbox")
+    waterbox = sim.add_volume("Box", "waterbox") #ORIGINAL
     waterbox.size = [0.5 * cm, 0.5 * cm, 0.5 * cm]
-    waterbox.translation = [0 * cm, 10 * cm, 0 * cm]
+
+    '''
+    #creating a cylinder waterbox
+    waterbox = sim.add_volume("TubsVolume", "waterbox")
+    waterbox.rmin = 0.0 * cm
+    waterbox.rmax = 0.5 * cm
+    waterbox.dz = 1 * cm
+    '''
+
+    waterbox.translation = [0 * cm, 0 * cm, 0 * cm]
     waterbox.material = "G4_WATER"
     waterbox.color = [0, 0, 1, 1]
+    
 
-    #hot_sphere = sim.add_volume("Sphere", "hot_sphere")
-    #hot_sphere.mother = waterbox.name
-    #hot_sphere.rmax = 5 * cm
-    #hot_sphere.material = "G4_WATER"
-    #hot_sphere.color = [1, 0, 0, 1]
+    hot_sphere = sim.add_volume("Sphere", "hot_sphere")
+    hot_sphere.mother = waterbox.name
+    hot_sphere.rmax = 0.2 * cm
+    hot_sphere.translation = [0, 0, 0]
+    hot_sphere.material = "G4_WATER"
+    hot_sphere.color = [1, 0, 0, 1]
 
+    #Adding a source to the hot sphere
+    hot_source = sim.add_source("GenericSource", "hot_sphere_source")
+    hot_source.attached_to = "hot_sphere"
+    hot_source.position.type = "sphere"
+    hot_source.position.radius = 2 * cm #Same as the hot sphere size
+    hot_source.particle = "e+"
+    hot_source.energy.type = "F18"
+    hot_source.activity = 5e6 * Bq #Higher activity than the waterbox
+    hot_source.half_life = 6586.26 * sec
+
+ 
     # source for tests
-    source = sim.add_source("GenericSource", "waterbox_source")
-    total_yield = get_rad_yield("F18")
-    print("Yield for F18 (nb of e+ per decay) : ", total_yield)
-    source.attached_to = "waterbox"
-    source.particle = "e+"
-    source.energy.type = "F18"
-    source.activity = 1e6 * Bq * total_yield
+    #source = sim.add_source("GenericSource", "waterbox_source")
+    #total_yield = get_rad_yield("F18")
+    #print("Yield for F18 (nb of e+ per decay) : ", total_yield)
+    #source.attached_to = "waterbox"
+
+    #creating spherical source
+    #source.distribution_type = "Volume"
+    #source.shape = "Sphere"
+    #source.radius = 0.4 * cm #Positron source spread over sphere
+
+    #source.particle = "e+"
+    #source.energy.type = "F18"
+    #source.activity = 1e6 * Bq * total_yield
     #if sim.visu:
     #    source.activity = 1e5 * Bq * total_yield
-    source.half_life = 6586.26 * sec
-
+    #source.half_life = 6586.26 * sec
+ 
 
     # add IEC phantom
     #iec_phantom = gate_iec.add_iec_phantom(sim, "iec")
