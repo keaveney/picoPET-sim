@@ -80,7 +80,7 @@ if __name__ == "__main__":
     
    # add a simple waterbox with a hot sphere inside
     waterbox = sim.add_volume("Box", "waterbox") #ORIGINAL
-    waterbox.size = [0.5 * cm, 0.5 * cm, 0.5 * cm]
+    waterbox.size = [5 * cm, 5 * cm, 5 * cm]
 
     '''
     #creating a cylinder waterbox
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     hot_sphere = sim.add_volume("Sphere", "hot_sphere")
     hot_sphere.mother = waterbox.name
-    hot_sphere.rmax = 0.2 * cm
+    hot_sphere.rmax = 2 * cm
     hot_sphere.translation = [0, 0, 0]
     hot_sphere.material = "G4_WATER"
     hot_sphere.color = [1, 0, 0, 1]
