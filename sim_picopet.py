@@ -137,7 +137,7 @@ if __name__ == "__main__":
     stats.output_filename = "stats_vereos.txt"
 
     # timing
-    sim.run_timing_intervals = [[0, 10 * sec]]
+    sim.run_timing_intervals = [[0, 1 * sec]]
 
     # go
     sim.run()
