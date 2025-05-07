@@ -52,10 +52,16 @@ def add_pet(sim, name="pet", create_housing=True, create_mat=True, debug=False):
 
     # ring volume
     pet = sim.add_volume("Tubs", name)
-    #pet.rmax = 500 * mm
+
+    #pet.rmax = 900 * mm
     #pet.rmin = 254 * mm
-    pet.rmax = 205 * mm
-    pet.rmin = 165 * mm
+
+    #pet.rmax = 205 * mm
+    #pet.rmin = 165 * mm
+
+    pet.rmax = 250 * mm
+    pet.rmin = 185 * mm
+    
     pet.dz = 60 * mm / 2.0
     pet.color = gray
     pet.material = "G4_AIR"
@@ -76,7 +82,7 @@ def add_pet(sim, name="pet", create_housing=True, create_mat=True, debug=False):
     module.color = red
     translations_ring, rotations_ring = get_circular_repetition(
         # 18 -> 2
-        31, [175 * mm, 0, 0], start_angle_deg=190, axis=[0, 0, 1]
+        31, [195 * mm, 0, 0], start_angle_deg=190, axis=[0, 0, 1]
     )
     module.translation = translations_ring
     module.rotation = rotations_ring
